@@ -1,0 +1,27 @@
+{
+  "name": "hn-scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scraper.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iifeoluwa/hn-scraper.git"
+  },
+  "author": "Ifeoluwa Arowosegbe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iifeoluwa/hn-scraper/issues"
+  },
+  "homepage": "https://github.com/iifeoluwa/hn-scraper#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "got": "9.2.2",
+    "minimist": "1.2.0"
+  }
+}
