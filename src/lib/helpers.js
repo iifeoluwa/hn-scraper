@@ -1,13 +1,22 @@
 'use strict';
 
-const { isUri } = require('valid-url');
+const Joi = require('joi');
 
-export function logError(message) {
+const schema = Joi.object().keys({
+    title: Joi.string().alphanum().min(1).max(256),
+    author: Joi.string().alphanum().min(1).max(256),
+    uri: Joi.string().uri(),
+    points: Joi.number().integer().min(0),
+    comments: Joi.number().integer().min(0),
+    rank: Joi.number().integer().min(0)
+});
+
+function logError(message) {
     console.log(`hackernews: ${message}`);
     process.exit(1);
 }
 
-export function isValidInput(args) {
+function isValidInput(args) {
     if(args.hasOwnProperty('posts') && Number.isInteger(args.posts)) {
         if(args.posts > 0 && args.posts <= 100) {
             return true;
@@ -18,10 +27,23 @@ export function isValidInput(args) {
     }
 }
 
-export function calculatePagesToFetch(posts) {
-    return Math.ceil(posts / STORIES_PER_PAGE);
+function calculatePagesToFetch(posts, perPage) {
+    return Math.ceil(posts / perPage);
 }
 
-export function isValidUri(uri) {
-    return isUri(uri);
+function isValidData(data) {
+    const result = Joi.validate(data, schema);
+
+    if(result.error === null) {
+        return true;
+    }
+
+    return false;
+}
+
+module.exports = {
+    logError,
+    isValidUri,
+    isValidInput,
+    calculatePagesToFetch
 }
