@@ -3,8 +3,8 @@
 const Joi = require('joi');
 
 const schema = Joi.object().keys({
-    title: Joi.string().alphanum().min(1).max(256),
-    author: Joi.string().alphanum().min(1).max(256),
+    title: Joi.string().trim().min(1).max(256),
+    author: Joi.string().trim().min(1).max(256),
     uri: Joi.string().uri(),
     points: Joi.number().integer().min(0),
     comments: Joi.number().integer().min(0),
@@ -31,7 +31,7 @@ function calculatePagesToFetch(posts, perPage) {
     return Math.ceil(posts / perPage);
 }
 
-function isValidData(data) {
+function isValidStory(data) {
     const result = Joi.validate(data, schema);
 
     if(result.error === null) {
@@ -43,7 +43,7 @@ function isValidData(data) {
 
 module.exports = {
     logError,
-    isValidUri,
+    isValidStory,
     isValidInput,
     calculatePagesToFetch
 }
