@@ -11,15 +11,24 @@ const schema = Joi.object().keys({
     rank: Joi.number().integer().min(0)
 });
 
+/**
+ * Writes data to STDOUT and terminates the process with status code of 1.
+ * @param {string} message data to be written to STDOUT
+ */
 function logError(message) {
     console.log(`hackernews: ${message}`);
     process.exit(1);
 }
 
-function isValidInput(args) {
-    if(args.hasOwnProperty('posts') && Number.isInteger(args.posts)) {
-        if(args.posts > 0 && args.posts <= 100) {
-            return true;
+/**
+ * Validates the posts argument, if it was passed when the program was executed.
+ * @param {Object} postsValue 
+ * @returns {Number} validated value of the posts argument
+ */
+function validateInput(postsValue) {
+    if(Number.isInteger(postsValue)) {
+        if(postsValue > 0 && postsValue <= 100) {
+            return parseInt(postsValue);
         }
         logError('value for --posts must be between 1 and 100');
     } else {
@@ -27,10 +36,21 @@ function isValidInput(args) {
     }
 }
 
+/**
+ * Determines the number of pages the scraper would process.
+ * Depends on the amount of stories displayed on each page and how many stories the user wants.
+ * @param {Number} posts amount of HN top stories to be fetched.
+ * @param {Number} perPage this is a constant that reflects the number of stories 
+ *                         currently displayed on the HN homepage
+ */
 function calculatePagesToFetch(posts, perPage) {
     return Math.ceil(posts / perPage);
 }
 
+/**
+ * Checks that the passed data meets the validation requirements enforced by the declared Joi schema
+ * @param {Object} data object to be validated
+ */
 function isValidStory(data) {
     const result = Joi.validate(data, schema);
 
@@ -44,6 +64,6 @@ function isValidStory(data) {
 module.exports = {
     logError,
     isValidStory,
-    isValidInput,
+    validateInput,
     calculatePagesToFetch
 }
