@@ -10,17 +10,36 @@ let storiesToFetch = 20;
 
 function isValidInput() {
     if(args.hasOwnProperty('posts') && Number.isInteger(args.posts)) {
-        return true;
+        if(args.posts > 0 && args.posts <= 100) {
+            return true;
+        }
+        logError('value for --posts must be between 1 and 100');
     } else {
-        console.log('Value for --posts invalid. Expects an integer.');
-        process.exit(1);
+        logError('value for --posts invalid. Expects an integer.')
     }
 }
 
-function startScraping() {
-    if(isValidInput()) {
-        console.log('validated')
-    }
+function logError(message) {
+    console.log(`hackernews: ${message}`);
+    process.exit(1);
+}
+
+function fetchBody(page = 1) {
+    return got(`${HN_URL}?p=${page}`)
+        .then(response => {
+            return response.body;
+        })
+        .catch(error => {
+            logError(error)
+        })
+}
+
+function calculatePagesToFetch() {
+    return Math.ceil(args.posts / STORIES_PER_PAGE);
+}
+
+async function startScraping() {
+    
 }
 
 startScraping();
