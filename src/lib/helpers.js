@@ -16,19 +16,19 @@ const schema = Joi.object().keys({
  * @param {string} message data to be written to STDOUT
  */
 function logError(message) {
-    console.log(`hackernews: ${message}`);
+    console.error(`hackernews: ${message}`);
     process.exit(1);
 }
 
 /**
  * Validates the posts argument, if it was passed when the program was executed.
- * @param {Object} postsValue 
+ * @param {String|Number} postsValue 
  * @returns {Number} validated value of the posts argument
  */
 function validateInput(postsValue) {
     if(Number.isInteger(postsValue)) {
         if(postsValue > 0 && postsValue <= 100) {
-            return parseInt(postsValue);
+            return postsValue;
         }
         logError('value for --posts must be between 1 and 100');
     } else {
