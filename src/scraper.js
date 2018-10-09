@@ -1,8 +1,10 @@
+#!/usr/bin/env node
+
 'use strict';
 
 const got = require('got');
 const cheerio = require('cheerio');
-const { 
+const {
     calculatePagesToFetch, 
     isValidStory, 
     validateInput, 
