@@ -6,7 +6,7 @@ This project crawls the [HackerNews](https://news.ycombinator.com/) website and 
 
 HackerNews provides [an API](https://github.com/HackerNews/API) that enables clients consume information about the top posts. For our use case though, consuming the API would have proved inefficient because, in the worst case scenario we would need to make 100+ network requests to fetch the top 100 stories.
 
-This solution makes a maximum of 4 network requests, as opposed to 100+ API calls to fetch the top 100 posts.
+This solution makes a maximum of 4 network requests, as opposed to 100+ API calls it would have taken to fetch the top 100 posts.
 
 ### How To Run.
 
