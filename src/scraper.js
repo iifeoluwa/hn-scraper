@@ -102,7 +102,7 @@ function startScraping() {
     scrapePage(pagesToScrape, storiesToFetch)
         .then(stories => {
             if (stories.length !== 0) {
-                console.log(stories);
+                console.log(JSON.stringify(stories));
                 process.exit();
             }
 
